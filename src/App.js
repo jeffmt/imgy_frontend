@@ -40,31 +40,52 @@ class App extends Component {
   }
 
   fileUploadHandler = () => {
-    const formData = new FormData();
+//    const formData = new FormData();
 
-    const files = this.filesInput.files;
+//    const files = this.filesInput.files;
 
 //    const encoded;
+/*
     for (var key in files) {
     // check if this is a file:
       if (files.hasOwnProperty(key) && files[key] instanceof File) {
-        console.log("key:", key, " value:", base64.encode(files[key]));
+        console.log("key:", key);
+        for (var key2 in files[key]) {
+          console.log("key2:", key2, " value:", files[key][key2]);
+          for (var key3 in files[key][key2]) {
+            console.log("key3:", key3, " value:", files[key][key2][key3]);
+          }
+        }
+      //  console.log("key:", key, " value:", base64.encode(files[key]));
 
         formData.append(key, base64.encode(files[key]));
 //        encoded = base64.encode(files[key]);
       }
     }
+*/
+    const file = this.filesInput.files[0];
+    console.log("file:", file);
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
+
+    reader.onload = function() {
+        console.log(btoa(reader.result));
+    //  axios.post('http://localhost:8095/users/1/posts', formData, {
+      axios.post('http://localhost:8095/users/1/posts', { image: btoa(reader.result) }, {
+        onUploadProgress: progressEvent => {
+          console.log('Upload Progress: ' + Math.round((progressEvent.loaded/progressEvent.total) * 100) + '%')
+        }
+      })
+      .then(res => {
+        console.log(res);
+      });
+
+    };
+    reader.onerror = function() {
+        console.log('there are some problems');
+    };
 
   //  fd.append('image', this.state.selectedFile, this.state.selectedFile.name);
-  //  axios.post('http://localhost:8095/users/1/posts', formData, {
-    axios.post('http://localhost:8095/users/1/posts', {image: base64.encode(this.filesInput.files[0])}, {
-      onUploadProgress: progressEvent => {
-        console.log('Upload Progress: ' + Math.round((progressEvent.loaded/progressEvent.total) * 100) + '%')
-      }
-    })
-    .then(res => {
-      console.log(res);
-    });
   }
 
   render() {
