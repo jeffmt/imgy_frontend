@@ -7,10 +7,13 @@ class Posts extends Component {
     if(this.props.posts){
       postItems = this.props.posts.map(post => {
         let id = post.id;
-        let src = post.id;
+        //let src = atob(post.image);
+        const src = "data:image/jpg;base64," + post.image;
+
+        console.log("post.image", post.image);
         return (
             <Col xs={12} md={4}>
-              <Image src="/thumbnail.png" thumbnail />
+              <Image src={src} thumbnail />
             </Col>
         );
       });
