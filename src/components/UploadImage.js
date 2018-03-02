@@ -12,6 +12,7 @@ export default class UploadImage extends Component {
   }
 
   onImageDrop(files) {
+    console.log("onImageDrop", files[0]);
     this.setState({
       uploadedFile: files[0]
     });
@@ -21,7 +22,7 @@ export default class UploadImage extends Component {
   }
 
   fileUploadHandler = () => {
-    console.log(this.uploadedFile);
+    console.log("uploadedFile", this.state.uploadedFile);
   }
 
 /*
