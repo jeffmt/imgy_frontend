@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
+import Header from './Header';
 import axios from 'axios'
 
 export default class UploadImage extends Component {
@@ -48,24 +49,27 @@ console.log("onImageDrop2:", this.state.uploadedFile);
   render() {
     console.log("in render:", this.state.uploadedFile);
     return (
-      <form>
-        <div className="FileUpload">
-          <Dropzone
-            multiple={false}
-            accept="image/*"
-            onDrop={this.onImageDrop.bind(this)}>
-            <p>Drop an image or click to select a file to upload.</p>
-          </Dropzone>
-        </div>
+      <div>
+        <Header />
+        <form>
+          <div className="FileUpload">
+            <Dropzone
+              multiple={false}
+              accept="image/*"
+              onDrop={this.onImageDrop.bind(this)}>
+              <p>Drop an image or click to select a file to upload.</p>
+            </Dropzone>
+          </div>
 
-        <div>
-          {this.state.uploadedFile === '' ? null :
           <div>
-            <p>{this.state.uploadedFile.name}</p>
-            <img src={this.state.uploadedFile} />
-          </div>}
-        </div>
-      </form>
+            {this.state.uploadedFile === '' ? null :
+            <div>
+              <p>{this.state.uploadedFile.name}</p>
+              <img src={this.state.uploadedFile} />
+            </div>}
+          </div>
+        </form>
+      </div>
     );
   }
 }

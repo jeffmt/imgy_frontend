@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Navbar} from 'react-bootstrap';
+import {Navbar, Nav, NavItem} from 'react-bootstrap';
 
 class Header extends Component {
   render() {
@@ -7,9 +7,12 @@ class Header extends Component {
       <Navbar>
         <Navbar.Header>
           <Navbar.Brand>
-            Imgy
+            <NavItem href="/">Imgy</NavItem>
           </Navbar.Brand>
         </Navbar.Header>
+        <Nav>
+          <NavItem href="/upload">Upload Image</NavItem>
+        </Nav>
       </Navbar>
     );
   }

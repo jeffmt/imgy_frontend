@@ -83,12 +83,6 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <input
-          type="file"
-          ref={(input) => { this.filesInput = input; }}
-          onChange={this.fileSelectedHandler}
-          name="file"/>
-        <button onClick={this.fileUploadHandler}>Upload</button>
         <Grid>
           <Row>
             <Col xs={12} md={12} lg={12}>
