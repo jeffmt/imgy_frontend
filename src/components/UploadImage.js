@@ -7,23 +7,59 @@ export default class UploadImage extends Component {
     super(props);
 
     this.state = {
-      uploadedFileCloudinaryUrl: ''
+//      uploadedFileCloudinaryUrl: ''
+      uploadedFile: ''
     };
   }
 
   onImageDrop(files) {
-    console.log("onImageDrop", files[0]);
-    this.setState({
-      uploadedFile: files[0]
+    const file = files[0];
+    console.log("onImageDrop:", file);
+    this.setState(() => {
+      return {
+//        uploadedFile: files[0]
+        uploadedFile: file
+      };
     });
+    console.log("onImageDrop2:", this.state.uploadedFile);
+
+    var imageMimeTypes = ['image/jpg' , 'image/jpeg', 'image/png', 'image/bmp', 'image/gif'];
+
+//    for (var key in files) {
+    // check if this is a file:
+//      if (files.hasOwnProperty(key) && files[key] instanceof File) {
+//        const file = this.filesInput.files[key];
+        // check if this is an image:
+        if (imageMimeTypes.indexOf(file.type) !== -1) {
+          const reader = new FileReader();
+          reader.readAsBinaryString(file);
+
+          reader.onload = function() {
+            axios.post('http://localhost:8095/users/1/posts', { image: btoa(reader.result) }, {
+              onUploadProgress: progressEvent => {
+                console.log('Upload Progress: ' + Math.round((progressEvent.loaded/progressEvent.total) * 100) + '%')
+              }
+            })
+            .then(res => {
+              console.log('res:', res);
+            });
+          };
+          reader.onerror = function() {
+              console.log('there are some problems');
+          };
+        }
+//      }
+//    }
 
 //    this.handleImageUpload(files[0]);
-    this.fileUploadHandler();
+//    this.fileUploadHandler();
   }
 
+  /*
   fileUploadHandler = () => {
     console.log("uploadedFile", this.state.uploadedFile);
   }
+ */
 
 /*
   handleImageUpload(file) {
@@ -46,6 +82,7 @@ export default class UploadImage extends Component {
 */
 
   render() {
+    console.log("in render:", this.state.uploadedFile);
     return (
       <form>
         <div className="FileUpload">
@@ -58,10 +95,10 @@ export default class UploadImage extends Component {
         </div>
 
         <div>
-          {this.state.uploadedFileCloudinaryUrl === '' ? null :
+          {this.state.uploadedFile === '' ? null :
           <div>
             <p>{this.state.uploadedFile.name}</p>
-            <img src={this.state.uploadedFileCloudinaryUrl} />
+            <img src={this.state.uploadedFile} />
           </div>}
         </div>
       </form>
