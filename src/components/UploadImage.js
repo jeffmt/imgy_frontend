@@ -7,79 +7,43 @@ export default class UploadImage extends Component {
     super(props);
 
     this.state = {
-//      uploadedFileCloudinaryUrl: ''
       uploadedFile: ''
     };
   }
 
   onImageDrop(files) {
     const file = files[0];
-    console.log("onImageDrop:", file);
+
+console.log("onImageDrop:", file);
     this.setState(() => {
       return {
-//        uploadedFile: files[0]
         uploadedFile: file
       };
     });
-    console.log("onImageDrop2:", this.state.uploadedFile);
+console.log("onImageDrop2:", this.state.uploadedFile);
 
     var imageMimeTypes = ['image/jpg' , 'image/jpeg', 'image/png', 'image/bmp', 'image/gif'];
 
-//    for (var key in files) {
-    // check if this is a file:
-//      if (files.hasOwnProperty(key) && files[key] instanceof File) {
-//        const file = this.filesInput.files[key];
-        // check if this is an image:
-        if (imageMimeTypes.indexOf(file.type) !== -1) {
-          const reader = new FileReader();
-          reader.readAsBinaryString(file);
+    // check if this is an image:
+    if (imageMimeTypes.indexOf(file.type) !== -1) {
+      const reader = new FileReader();
+      reader.readAsBinaryString(file);
 
-          reader.onload = function() {
-            axios.post('http://localhost:8095/users/1/posts', { image: btoa(reader.result) }, {
-              onUploadProgress: progressEvent => {
-                console.log('Upload Progress: ' + Math.round((progressEvent.loaded/progressEvent.total) * 100) + '%')
-              }
-            })
-            .then(res => {
-              console.log('res:', res);
-            });
-          };
-          reader.onerror = function() {
-              console.log('there are some problems');
-          };
-        }
-//      }
-//    }
-
-//    this.handleImageUpload(files[0]);
-//    this.fileUploadHandler();
-  }
-
-  /*
-  fileUploadHandler = () => {
-    console.log("uploadedFile", this.state.uploadedFile);
-  }
- */
-
-/*
-  handleImageUpload(file) {
-    let upload = request.post(CLOUDINARY_UPLOAD_URL)
-                        .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
-                        .field('file', file);
-
-    upload.end((err, response) => {
-      if (err) {
-        console.error(err);
-      }
-
-      if (response.body.secure_url !== '') {
-        this.setState({
-          uploadedFileCloudinaryUrl: response.body.secure_url
+      reader.onload = function() {
+        axios.post('http://localhost:8095/users/1/posts', { image: btoa(reader.result) }, {
+          onUploadProgress: progressEvent => {
+            console.log('Upload Progress: ' + Math.round((progressEvent.loaded/progressEvent.total) * 100) + '%')
+          }
+        })
+        .then(res => {
+          console.log('res:', res);
         });
-      }
-    });
+      };
+      reader.onerror = function() {
+          console.log('there are some problems');
+      };
+    }
   }
-*/
 
   render() {
     console.log("in render:", this.state.uploadedFile);
