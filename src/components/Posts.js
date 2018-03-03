@@ -6,12 +6,11 @@ class Posts extends Component {
     let postItems;
     if(this.props.posts){
       postItems = this.props.posts.map(post => {
-        let id = post.id;
 
         const src = "data:image/jpg;base64," + post.image;
 
         return (
-            <Col xs={12} md={4}>
+            <Col key={post.id} xs={12} md={4}>
               <Image src={src} thumbnail />
             </Col>
         );
