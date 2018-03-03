@@ -64,8 +64,7 @@ console.log("onImageDrop2:", this.state.uploadedFile);
           <div>
             {this.state.uploadedFile === '' ? null :
             <div>
-              <p>{this.state.uploadedFile.name}</p>
-              <img src={this.state.uploadedFile} />
+              <p>{this.state.uploadedFile.name} Uploaded!</p>
             </div>}
           </div>
         </form>
