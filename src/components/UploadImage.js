@@ -50,7 +50,7 @@ export default class UploadImage extends Component {
       <div>
         <Header />
         <form>
-          <div className="FileUpload">
+          <div style={{display: 'flex', justifyContent: 'center'}} >
             <Dropzone
               multiple={false}
               accept="image/*"
@@ -59,7 +59,7 @@ export default class UploadImage extends Component {
             </Dropzone>
           </div>
 
-          <div>
+          <div style={{display: 'flex', justifyContent: 'center'}} >
             {this.state.uploadedFile === '' ? null :
             <div>
               <p>{this.state.uploadedFile.name} Uploaded!</p>
