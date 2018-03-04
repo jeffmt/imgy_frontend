@@ -15,13 +15,11 @@ export default class UploadImage extends Component {
   onImageDrop(files) {
     const file = files[0];
 
-console.log("onImageDrop:", file);
     this.setState(() => {
       return {
         uploadedFile: file
       };
     });
-console.log("onImageDrop2:", this.state.uploadedFile);
 
     var imageMimeTypes = ['image/jpg' , 'image/jpeg', 'image/png', 'image/bmp', 'image/gif'];
 
