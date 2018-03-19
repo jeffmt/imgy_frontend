@@ -8,7 +8,7 @@ class Posts extends Component {
     if(this.props.posts){
       postItems = this.props.posts.map(post => {
         return (
-            <Col key={post.id} xs={12} md={4}>
+            <Col key={post.id} xs={12} md={2}>
                 <Post post={post} />
             </Col>
         );
