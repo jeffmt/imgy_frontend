@@ -21,15 +21,13 @@ export default class UploadImage extends Component {
       };
     });
 
-    var imageMimeTypes = ['image/jpg' , 'image/jpeg', 'image/png', 'image/bmp', 'image/gif'];
-
-    // check if this is an image:
-    if (imageMimeTypes.indexOf(file.type) !== -1) {
+    // check if image file uploaded:
+    if (file) {
       const reader = new FileReader();
       reader.readAsBinaryString(file);
 
       reader.onload = function() {
-        axios.post('http://localhost:8095/users/1/posts', { image: btoa(reader.result) }, {
+        axios.post('http://localhost:8080/users/1/posts', { image: btoa(reader.result) }, {
           onUploadProgress: progressEvent => {
             console.log('Upload Progress: ' + Math.round((progressEvent.loaded/progressEvent.total) * 100) + '%')
           }
@@ -60,10 +58,19 @@ export default class UploadImage extends Component {
           </div>
 
           <div style={{display: 'flex', justifyContent: 'center'}} >
-            {this.state.uploadedFile === '' ? null :
-            <div>
-              <p>{this.state.uploadedFile.name} Uploaded!</p>
-            </div>}
+            {
+              this.state.uploadedFile === '' ?
+              null
+              :
+              this.state.uploadedFile !== undefined ?
+              <div>
+                <p>{this.state.uploadedFile.name} Uploaded!</p>
+              </div>
+              :
+              <div>
+                <p>Please try again with an image file</p>
+              </div>
+            }
           </div>
         </form>
       </div>

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {Image, OverlayTrigger, Popover} from 'react-bootstrap';
+import {OverlayTrigger, Popover, Image} from 'react-bootstrap';
 
 class Post extends Component {
   render() {
-    let {id, description, image, views} = this.props;
+    let {id, description, image, views} = this.props.post;
 
     description = description || " ";
 
@@ -15,10 +15,11 @@ class Post extends Component {
       </Popover>
     );
 
+    const link = "/post/" + id;
     return (
       <div className="Post">
         <OverlayTrigger placement="left" overlay={popover}>
-          <a href="/post"><Image src={src} thumbnail /></a>
+          <a href={link}><Image src={src} thumbnail /></a>
         </OverlayTrigger>
       </div>
     )

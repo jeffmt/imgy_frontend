@@ -20,7 +20,7 @@ class App extends Component {
   getPosts() {
     axios.request({
         method: 'get',
-        url: 'http://localhost:8095/posts',
+        url: 'http://localhost:8080/posts',
     }).then((response) => {
       this.setState({posts: response.data}, () => {
         console.log(this.state);
@@ -31,16 +31,23 @@ class App extends Component {
   }
 
   render() {
+    const {posts} = this.state
     return (
       <div className="App">
         <Header />
-        <Grid>
-          <Row>
-            <Col xs={12} md={12} lg={12}>
-              <Posts posts={this.state.posts}/>
-            </Col>
-          </Row>
-        </Grid>
+            <Grid>
+              <Row>
+              {
+                posts ? (
+                    <Col xs={12} md={12} lg={12}>
+                      <Posts posts={posts}/>
+                    </Col>
+                ) : (
+                  <div>Loading...</div>
+                )
+              }
+              </Row>
+            </Grid>
       </div>
     );
   }

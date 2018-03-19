@@ -9,7 +9,7 @@ class Posts extends Component {
       postItems = this.props.posts.map(post => {
         return (
             <Col key={post.id} xs={12} md={4}>
-                <Post {...post}/>
+                <Post post={post} />
             </Col>
         );
       });
