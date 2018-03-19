@@ -1,13 +1,13 @@
 # Imgy Project Frontend
 
-This project is to create a clone of the Imgur photo sharing site.  I will attempt to create a restful api backend in Java that performs CRUD operations to MySQL tables.  The frontend will be done in React and will make calls to the backend api in response to user actions.
+This is a work-in-progress project to create a clone of the Imgur photo sharing site.  I created a restful api backend in Java that performs CRUD operations to MySQL tables.  I created a React frontend that make calls to the backend api in response to user actions.
 
 ## ScreenShots
 
-![Home](Home.png "Home")
+![Posts](Posts.png "Posts")
 
 
-![PostDetail](PostDetail1.png "Post Detail")
+![Post](Post.png "Post Detail")
 
 
-![SignIn](SignIn.png "Sign In")
+![UploadPost](UploadPost.png "Upload")
