@@ -1,0 +1,27 @@
+ .post-form {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   border: 7px solid #2c3e50;
+   border-radius: 7px;
+   padding: 15px;
+   margin: 10px;
+ }
+
+ .post-form input[type=text] {
+   padding: 5px 8px;
+   box-sizing: border-box;
+ }
+
+ .close-button {
+   cursor: pointer;
+   align-self: flex-end;
+   background-color: transparent;
+   border: none;
+ }
+
+ .post-form-container {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }

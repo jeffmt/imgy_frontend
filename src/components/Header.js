@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 
 class Header extends Component {
+  static defaultProps = {
+    onNewPost() {}
+  }
+
+  static propTypes = {
+    onNewPost: PropTypes.func
+  }
+
   render() {
     return (
       <Navbar>
@@ -11,7 +20,7 @@ class Header extends Component {
           </Navbar.Brand>
         </Navbar.Header>
         <Nav>
-          <NavItem href="/upload">Upload Image</NavItem>
+          <NavItem onClick={this.props.onNewPost}>Upload Image</NavItem>
         </Nav>
       </Navbar>
     );
