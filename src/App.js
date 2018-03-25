@@ -27,7 +27,7 @@ class App extends Component {
         url: 'http://localhost:8080/posts',
     }).then((response) => {
       this.setState({posts: response.data}, () => {
-        console.log(this.state);
+        console.log("here, state: ", this.state);
       });
     }).catch((error) => {
         console.log(error);
@@ -35,34 +35,90 @@ class App extends Component {
   }
 
   handleSave(accepted, description) {
-    console.log("accepted: ", accepted);
     const file = accepted[0];
-    this.setState((prevState, props) => {
-      return {
-        posts: [...this.state.posts, file],
-        showForm: false
-      }
-    });
-//    console.log("newPost:", file);
-//    console.log("state:", this.state);
 
     const reader = new FileReader();
     reader.readAsBinaryString(file);
-    // let base64 = btoa(reader.result);
-    // console.log("base64:", base64);
+
+    var self = this;
+
+    reader.onload = function() {
+      axios({
+          method: 'post',
+          url: 'http://localhost:8080/users/1/posts',
+          data: { image: btoa(reader.result), description: description},
+          config: {
+            headers: {'Access-Control-Expose-Headers': 'location'}
+          }
+      })
+      .then(function(response) {
+        console.log('response:', response);
+        console.log('response headers:', response.headers);
+
+        console.log('data:',response.data);
+        console.log('status:',response.status);
+        console.log('statusText:',response.statusText);
+        console.log('config:',response.config);
+        //console.log('Content-Language:',response.headers.get('Content-Language'));
+        if (response.status === 201) {
+          axios.request({
+              method: 'get',
+              url: 'http://localhost:8080/posts',
+          }).then((response) => {
+            console.log("69:", response);
+            if (response.data.length > 0) {
+              console.log("last id:", response.data[response.data.length - 1].id);
+
+              self.setState((prevState, props) => {
+                return {
+                  posts: [...self.state.posts, { id: response.data[response.data.length - 1].id, image: btoa(reader.result), description: description}],
+                  showForm: false,
+                }
+              });
+            }
+          }).catch((error) => {
+              console.log(error);
+          });
+        }
+
+      });
+
+
+    };
+/*
     reader.onload = function() {
       axios.post('http://localhost:8080/users/1/posts', { image: btoa(reader.result), description: description}, {
         onUploadProgress: progressEvent => {
           console.log('Upload Progress: ' + Math.round((progressEvent.loaded/progressEvent.total) * 100) + '%')
-        }
+        },
+        headers: {'Access-Control-Expose-Headers': 'location'}
       })
-      .then(res => {
-        console.log('res:', res);
+      .then(function(response) {
+        console.log('response:', response);
+        console.log('response headers:', response.headers);
+
+        console.log('data:',response.data);
+        console.log('status:',response.status);
+        console.log('statusText:',response.statusText);
+        console.log('config:',response.config);
+        //console.log('Content-Language:',response.headers.get('Content-Language'));
+      });
+
+      self.setState((prevState, props) => {
+        return {
+          posts: [...self.state.posts, { id: self.state.nextId, image: btoa(reader.result), description: description}],
+          showForm: false,
+          nextId: prevState.nextId + 1
+        }
       });
     };
+    */
     reader.onerror = function() {
         console.log('there are some problems');
     };
+    reader.loadend = function() {
+      console.log("loadend: ", btoa(reader.result));
+    }
   }
 
   render() {
