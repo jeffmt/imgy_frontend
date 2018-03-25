@@ -26,9 +26,7 @@ class App extends Component {
         method: 'get',
         url: 'http://localhost:8080/posts',
     }).then((response) => {
-      this.setState({posts: response.data}, () => {
-        console.log("here, state: ", this.state);
-      });
+      this.setState({posts: response.data});
     }).catch((error) => {
         console.log(error);
     });
@@ -52,23 +50,12 @@ class App extends Component {
           }
       })
       .then(function(response) {
-        console.log('response:', response);
-        console.log('response headers:', response.headers);
-
-        console.log('data:',response.data);
-        console.log('status:',response.status);
-        console.log('statusText:',response.statusText);
-        console.log('config:',response.config);
-        //console.log('Content-Language:',response.headers.get('Content-Language'));
         if (response.status === 201) {
           axios.request({
               method: 'get',
               url: 'http://localhost:8080/posts',
           }).then((response) => {
-            console.log("69:", response);
             if (response.data.length > 0) {
-              console.log("last id:", response.data[response.data.length - 1].id);
-
               self.setState((prevState, props) => {
                 return {
                   posts: [...self.state.posts, { id: response.data[response.data.length - 1].id, image: btoa(reader.result), description: description}],
@@ -80,45 +67,11 @@ class App extends Component {
               console.log(error);
           });
         }
-
-      });
-
-
-    };
-/*
-    reader.onload = function() {
-      axios.post('http://localhost:8080/users/1/posts', { image: btoa(reader.result), description: description}, {
-        onUploadProgress: progressEvent => {
-          console.log('Upload Progress: ' + Math.round((progressEvent.loaded/progressEvent.total) * 100) + '%')
-        },
-        headers: {'Access-Control-Expose-Headers': 'location'}
-      })
-      .then(function(response) {
-        console.log('response:', response);
-        console.log('response headers:', response.headers);
-
-        console.log('data:',response.data);
-        console.log('status:',response.status);
-        console.log('statusText:',response.statusText);
-        console.log('config:',response.config);
-        //console.log('Content-Language:',response.headers.get('Content-Language'));
-      });
-
-      self.setState((prevState, props) => {
-        return {
-          posts: [...self.state.posts, { id: self.state.nextId, image: btoa(reader.result), description: description}],
-          showForm: false,
-          nextId: prevState.nextId + 1
-        }
       });
     };
-    */
     reader.onerror = function() {
         console.log('there are some problems');
     };
-    reader.loadend = function() {
-      console.log("loadend: ", btoa(reader.result));
-    }
   }
 
   render() {
