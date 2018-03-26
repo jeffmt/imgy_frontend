@@ -5,7 +5,7 @@ import Post from './Post';
 class Posts extends Component {
   render() {
     let postItems;
-    if(this.props.posts){
+    if(this.props && this.props.posts.length > 0){
       postItems = this.props.posts.map(post => {
         return (
             <Col key={post.id} xs={12} md={2}>

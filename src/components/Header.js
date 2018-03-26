@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 
 class Header extends Component {
-  static defaultProps = {
-    onNewPost() {}
-  }
-
-  static propTypes = {
-    onNewPost: PropTypes.func
-  }
-
   render() {
+    const {onNewPost} = this.props;
+
     return (
       <Navbar>
         <Navbar.Header>
@@ -20,7 +13,13 @@ class Header extends Component {
           </Navbar.Brand>
         </Navbar.Header>
         <Nav>
-          <NavItem onClick={this.props.onNewPost}>Upload Image</NavItem>
+          {
+            onNewPost ?
+            (
+              <NavItem onClick={this.props.onNewPost}>Upload Image</NavItem>
+            )
+            : null
+          }
         </Nav>
       </Navbar>
     );
