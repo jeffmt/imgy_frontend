@@ -39,7 +39,7 @@ class PostDetail extends Component {
           <Row>
             <Col xs={12} md={12} lg={12}>
               <PageHeader>{desc}</PageHeader>
-              <Image src={src} thumbnail />
+              <Image src={src} rounded />
               <ImageInfo post={this.state.post} />
             </Col>
           </Row>

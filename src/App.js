@@ -34,44 +34,45 @@ class App extends Component {
 
   handleSave(accepted, description) {
     const file = accepted[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsBinaryString(file);
 
-    const reader = new FileReader();
-    reader.readAsBinaryString(file);
+      var self = this;
 
-    var self = this;
-
-    reader.onload = function() {
-      axios({
-          method: 'post',
-          url: 'http://localhost:8080/users/1/posts',
-          data: { image: btoa(reader.result), description: description},
-          config: {
-            headers: {'Access-Control-Expose-Headers': 'location'}
-          }
-      })
-      .then(function(response) {
-        if (response.status === 201) {
-          axios.request({
-              method: 'get',
-              url: 'http://localhost:8080/posts',
-          }).then((response) => {
-            if (response.data.length > 0) {
-              self.setState((prevState, props) => {
-                return {
-                  posts: [...self.state.posts, { id: response.data[response.data.length - 1].id, image: btoa(reader.result), description: description}],
-                  showForm: false,
-                }
-              });
+      reader.onload = function() {
+        axios({
+            method: 'post',
+            url: 'http://localhost:8080/users/1/posts',
+            data: { image: btoa(reader.result), description: description},
+            config: {
+              headers: {'Access-Control-Expose-Headers': 'location'}
             }
-          }).catch((error) => {
-              console.log(error);
-          });
-        }
-      });
-    };
-    reader.onerror = function() {
-        console.log('there are some problems');
-    };
+        })
+        .then(function(response) {
+          if (response.status === 201) {
+            axios.request({
+                method: 'get',
+                url: 'http://localhost:8080/posts',
+            }).then((response) => {
+              if (response.data.length > 0) {
+                self.setState((prevState, props) => {
+                  return {
+                    posts: [...self.state.posts, { id: response.data[response.data.length - 1].id, image: btoa(reader.result), description: description, views: 0}],
+                    showForm: false,
+                  }
+                });
+              }
+            }).catch((error) => {
+                console.log(error);
+            });
+          }
+        });
+      };
+      reader.onerror = function() {
+          console.log('there are some problems');
+      };
+    }
   }
 
   render() {
