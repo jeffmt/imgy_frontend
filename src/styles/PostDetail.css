@@ -1,0 +1,30 @@
+.page-header * {
+  color: #f2f2f2;
+}
+
+.btn-toolbar {
+  margin: 15px;
+}
+
+.btn {
+  background: #3F434A;
+  color: #f2f2f2;
+}
+
+.btn:hover {
+  background: #3F534A;
+  color: #f2f2f2;
+}
+
+.btn-primary {
+  background: #5c69ff;
+}
+
+.btn-primary:hover {
+  background: #5c79ff;
+}
+
+.not-valid {
+  color: #f2f2f2;
+  font-size: 1.5em;
+}

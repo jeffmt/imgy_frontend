@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
+import '../styles/Header.css';
 
 class Header extends Component {
   render() {
@@ -16,7 +17,7 @@ class Header extends Component {
           {
             onNewPost ?
             (
-              <NavItem onClick={this.props.onNewPost}>Upload Image</NavItem>
+              <NavItem onClick={this.props.onNewPost}>New Post</NavItem>
             )
             : null
           }
