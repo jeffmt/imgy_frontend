@@ -11,10 +11,20 @@ class PostDetail extends Component {
     this.state = {
       post: {}
     }
+    this.incrementViews = this.incrementViews.bind(this);
   }
 
   componentWillMount(){
     this.getPost();
+  }
+
+  incrementViews(id) {
+    axios.request({
+        method: 'put',
+        url: 'http://localhost:8080/posts/' + id,
+    }).catch((error) => {
+        console.log(error);
+    });
   }
 
   getPost() {
@@ -54,7 +64,7 @@ class PostDetail extends Component {
     if ( next_post_id !== undefined ) {
       const link = "/post/" + next_post_id;
       next_button =
-          <Button bsStyle="primary" href={link}>
+          <Button bsStyle="primary" href={link} onClick={this.incrementViews.bind(this, next_post_id)} >
             Next Post &gt;
           </Button>;
     }
@@ -63,7 +73,7 @@ class PostDetail extends Component {
     if ( prev_post_id !== undefined ) {
       const link = "/post/" + prev_post_id;
       prev_button =
-        <Button href={link} >
+        <Button href={link} onClick={this.incrementViews.bind(this, prev_post_id)} >
           &lt;
         </Button>;
     }
